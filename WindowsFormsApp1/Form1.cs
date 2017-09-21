@@ -22,10 +22,6 @@ namespace WindowsFormsApp1
 
             launchApplication();
 
-            
-
-            //MARK: - TODO Launch 64 bit
-
             //MARK: - TODO Start time
 
         }
@@ -34,7 +30,7 @@ namespace WindowsFormsApp1
         {
             Console.WriteLine("Launching");
 
-            process = System.Diagnostics.Process.Start("C:\\Program Files (x86)\\NinjaTrader 8\\bin\\NinjaTrader");
+            process = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\NinjaTrader 8\bin64\NinjaTrader");
             
             Console.WriteLine("Waiting to restart");
 
