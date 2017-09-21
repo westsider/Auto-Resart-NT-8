@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
+using System.Threading;
 
 namespace WindowsFormsApp1
 {
@@ -20,16 +22,13 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
-            launchApplication();
-
-            quitApplication();
-
-            //MARK: - TODO Split Start func
-            //MARK: - TODO Start time
+            SetTimer(Hour: 8, Minute: 37);
             //MARK: - TODO End time
+            quitApplication();
+            //MARK: - Enable strat
         }
 
-        private async void launchApplication()
+        private  void LaunchApplication()
         {
             Console.WriteLine("Launching");
 
@@ -39,17 +38,18 @@ namespace WindowsFormsApp1
 
         }
 
-        private async void quitApplication()
+        private  void quitApplication()
         {
-            await PutTaskDelay();
+           // await PutTaskDelay();
 
             Console.WriteLine("Quitting Application");
 
             process.Kill();
         }
-            async Task PutTaskDelay()
+
+        async Task PutTaskDelay()
         {
-       
+
             for (i = 0; i < 20; i++)
             {
                 Console.WriteLine(i);
@@ -57,6 +57,27 @@ namespace WindowsFormsApp1
             }
         }
 
-   
-    }
+        private void SetTimer(int Hour, int Minute)
+        {
+            System.Threading.TimerCallback callback = new TimerCallback(ProcessTimerEvent);
+
+            //first occurrence at
+            var dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Hour, Minute, 0);
+
+            if (DateTime.Now < dt)
+            {
+                var timer = new System.Threading.Timer(callback, null,
+                                //other occurrences every 24 hours
+                                dt - DateTime.Now, TimeSpan.FromHours(24));
+            }
+
+        }
+
+        private void ProcessTimerEvent(object obj)
+        {
+            MessageBox.Show("Hi Its Time");
+
+            LaunchApplication();
+        }
+    } 
 }
