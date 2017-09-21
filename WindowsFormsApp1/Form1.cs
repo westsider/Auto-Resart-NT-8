@@ -22,46 +22,15 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
-            SetTimer(Hour: 8, Minute: 37);
-            //MARK: - TODO End time
-            quitApplication();
+            StartAt(Hour: 8, Minute: 48);
+            
             //MARK: - Enable strat
         }
 
-        private  void LaunchApplication()
-        {
-            Console.WriteLine("Launching");
-
-            process = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\NinjaTrader 8\bin64\NinjaTrader");
-            
-            Console.WriteLine("Waiting to restart");
-
-        }
-
-        private  void quitApplication()
-        {
-           // await PutTaskDelay();
-
-            Console.WriteLine("Quitting Application");
-
-            process.Kill();
-        }
-
-        async Task PutTaskDelay()
-        {
-
-            for (i = 0; i < 20; i++)
-            {
-                Console.WriteLine(i);
-                await Task.Delay(1000);
-            }
-        }
-
-        private void SetTimer(int Hour, int Minute)
+        private void StartAt(int Hour, int Minute)
         {
             System.Threading.TimerCallback callback = new TimerCallback(ProcessTimerEvent);
 
-            //first occurrence at
             var dt = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, Hour, Minute, 0);
 
             if (DateTime.Now < dt)
@@ -75,9 +44,39 @@ namespace WindowsFormsApp1
 
         private void ProcessTimerEvent(object obj)
         {
-            MessageBox.Show("Hi Its Time");
-
             LaunchApplication();
+
+            quitApplicationAsync();
+        }
+
+        private void LaunchApplication()
+        {
+            Console.WriteLine("Launching");
+
+            process = System.Diagnostics.Process.Start(@"C:\Program Files (x86)\NinjaTrader 8\bin64\NinjaTrader");
+
+            Console.WriteLine("Waiting to restart");
+
+        }
+
+        private async void quitApplicationAsync()
+        {
+            await PutTaskDelay();
+
+            Console.WriteLine("Quitting Application");
+
+            process.Kill();
+        }
+
+        async Task PutTaskDelay()
+        {
+
+            for (i = 0; i < 20; i++)
+            {
+                Console.WriteLine(i);
+
+                await Task.Delay(1000);
+            }
         }
     } 
 }
