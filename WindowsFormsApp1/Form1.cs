@@ -25,11 +25,11 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
-            StartAt(Hour: 9, Minute: 45);
+            StartAt(Hour: 10, Minute: 25);
             
             //MARK: - Enable strat
             // convert delay to hous, min, sec
-            // ui for start time, delay or end time, file location or disc name
+            // ui for start time + reset, delay or end time + reset, file location or disc name
         }
 
         private void StartAt(int Hour, int Minute)
@@ -75,18 +75,21 @@ namespace WindowsFormsApp1
             {
                 SetForegroundWindow(p[0].MainWindowHandle);
                 Console.WriteLine("Window is active");
+                Auto
+                //var checkBox = p[0].Container.Equals("Enabled");
+                //checkBox = true;
             }
         }
 
 
-        //private async void quitApplicationAsync()
-        //{
-        //    await PutTaskDelay(Seconds: 20);
+        private async void quitApplicationAsync()
+        {
+            await PutTaskDelay(Seconds: 20);
 
-        //    Console.WriteLine("Quitting Application");
+            Console.WriteLine("Quitting Application");
 
-        //    process.Kill();
-        //}
+            process.Kill();
+        }
 
         async Task PutTaskDelay(int Seconds)
         {
